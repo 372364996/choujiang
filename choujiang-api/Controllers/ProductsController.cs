@@ -11,7 +11,7 @@ using Components.Repositories.Ef;
 
 namespace choujiang_api.Controllers
 {
-    public class ProductsController : Controller
+    public class ProductsController : WxAppController
     {
         private ChouJiangDbContext db = new ChouJiangDbContext();
 
@@ -23,9 +23,15 @@ namespace choujiang_api.Controllers
         }
         public ActionResult GetProductById(int id)
         {
+            bool isCan = false;
             var product = db.Products.Find(id);
+            var order = db.Orders.Where(o => o.PorductId == id && o.UserId == CurrentUser.Id).SingleOrDefault();
+            if (order==null)
+            {
+                isCan = true;
+            }
             //var product = products.Select(p => new { p.Id, p.Name, BusinessName = p.Business.Name, OpenTime = p.OpenTime.ToLongTimeString() });
-            return Json(new { success = true, product.Id, product.Name, BusinessName = product.Business.Name, OpenTime=product.OpenTime.ToString("MM月dd日 HH:mm") }, JsonRequestBehavior.AllowGet);
+            return Json(new { success = true,iscan=isCan, product.Id, product.Name, BusinessName = product.Business.Name, OpenTime=product.OpenTime.ToString("MM月dd日 HH:mm") }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult List()
         {
