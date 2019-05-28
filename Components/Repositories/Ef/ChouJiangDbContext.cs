@@ -142,6 +142,12 @@ namespace Components.Repositories.Ef
         public DbSet<Account> Account { get; set; }
         public DbSet<AccountChargeLog> AccountChargeLog { get; set; }
         public DbSet<AccountVouchersLog> AccountVouchersLog { get; set; }
+
+        public System.Data.Entity.DbSet<Components.Domains.Products> Products { get; set; }
+
+        public System.Data.Entity.DbSet<Components.Domains.Business> Businesses { get; set; }
+
+        public System.Data.Entity.DbSet<Components.Domains.Order> Orders { get; set; }
     }
 
 
