@@ -13,6 +13,11 @@ namespace choujiang_api.Controllers
 {
     public class HomeController : WxAppController
     {
+        public ActionResult Index()
+        {
+            return View();
+        }
+
         public JsonResult Login(string encryptedData, string iv, string code)
         {
             if (string.IsNullOrEmpty(code))

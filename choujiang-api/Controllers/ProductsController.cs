@@ -49,10 +49,11 @@ namespace choujiang_api.Controllers
         // 详细信息，请参阅 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,CreateTime,OpenTime,BusinessId")] Products products)
+        public ActionResult Create([Bind(Include = "Id,Name,OpenTime,BusinessId")] Products products)
         {
             if (ModelState.IsValid)
             {
+                products.CreateTime=DateTime.Now;
                 db.Products.Add(products);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -83,7 +84,7 @@ namespace choujiang_api.Controllers
         // 详细信息，请参阅 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,CreateTime,OpenTime,BusinessId")] Products products)
+        public ActionResult Edit([Bind(Include = "Id,Name,OpenTime,BusinessId")] Products products)
         {
             if (ModelState.IsValid)
             {

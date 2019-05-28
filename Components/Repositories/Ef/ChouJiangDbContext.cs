@@ -143,7 +143,7 @@ namespace Components.Repositories.Ef
         public DbSet<AccountChargeLog> AccountChargeLog { get; set; }
         public DbSet<AccountVouchersLog> AccountVouchersLog { get; set; }
 
-        public System.Data.Entity.DbSet<Components.Domains.Products> Products { get; set; }
+        public DbSet<Components.Domains.Products> Products { get; set; }
 
         public System.Data.Entity.DbSet<Components.Domains.Business> Businesses { get; set; }
 

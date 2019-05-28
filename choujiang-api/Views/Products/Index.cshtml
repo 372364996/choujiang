@@ -1,38 +1,35 @@
 ﻿@model IEnumerable<Components.Domains.Products>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "产品";
 }
-
-<h2>Index</h2>
-
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <a style="margin-top: 25px" href="/products/create" class="btn btn-primary">添加产品</a>
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Business.Name)
+            产品名称
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+           提供商
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CreateTime)
+          添加时间
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.OpenTime)
+          开奖时间
         </th>
-        <th></th>
+        <th>操作</th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Business.Name)
+            @Html.DisplayFor(modelItem => item.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Name)
+            @Html.DisplayFor(modelItem => item.Business.Name)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.CreateTime)
@@ -41,9 +38,9 @@
             @Html.DisplayFor(modelItem => item.OpenTime)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("修改", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("详情", "Details", new { id=item.Id }) |
+            @Html.ActionLink("删除", "Delete", new { id=item.Id })
         </td>
     </tr>
 }
