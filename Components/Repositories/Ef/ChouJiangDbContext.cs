@@ -51,10 +51,11 @@ namespace Components.Repositories.Ef
             modelBuilder.Entity<AccountVouchersLog>().ToTable("AccountVouchersLogs");
             modelBuilder.Entity<AccountChargeLog>().ToTable("AccountChargeLogs");
             modelBuilder.Entity<AccountCashOutOperationLog>().ToTable("AccountCashOutOperationLogs");
-
             modelBuilder.Configurations.Add(new UserMapping());
             modelBuilder.Configurations.Add(new AccountMapping());
             modelBuilder.Configurations.Add(new AccountCashOutLogMapping());
+            modelBuilder.Configurations.Add(new OrderMapping());
+            modelBuilder.Configurations.Add(new BusinessMapping());
 
         }
         public class UserMapping : EntityTypeConfiguration<User>
@@ -62,9 +63,36 @@ namespace Components.Repositories.Ef
             public UserMapping()
             {
                 ToTable("Users");
+            }
+        }
 
+        public class OrderMapping : EntityTypeConfiguration<Order>
+        {
+            public OrderMapping()
+            {
+                ToTable("Orders");
 
+                HasRequired(c => c.Products)
+                    .WithMany(c => c.Orders)
+                    .HasForeignKey(c => c.PorductId)
+                    .WillCascadeOnDelete(false);
 
+                HasRequired(c => c.Users)
+                    .WithMany(c => c.Orders)
+                    .HasForeignKey(c => c.UserId)
+                    .WillCascadeOnDelete(false);
+            }
+        }
+        public class BusinessMapping : EntityTypeConfiguration<Business>
+        {
+            public BusinessMapping()
+            {
+                ToTable("Business");
+
+                HasMany(u => u.Products)
+                    .WithRequired(s => s.Business)
+                    .HasForeignKey(s => s.BusinessId)
+                    .WillCascadeOnDelete(false);
             }
         }
         public class AccountMapping : EntityTypeConfiguration<Account>

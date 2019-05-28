@@ -57,6 +57,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Domains\Account.cs" />
+    <Compile Include="Domains\Business.cs" />
+    <Compile Include="Domains\Order.cs" />
+    <Compile Include="Domains\Products.cs" />
     <Compile Include="Domains\User.cs" />
     <Compile Include="Helper\CryptoHelper.cs" />
     <Compile Include="Helper\Utils.cs" />

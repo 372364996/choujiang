@@ -36,6 +36,7 @@ namespace Components.Domains
         /// 我的账户
         /// </summary>
         public virtual Account Account { get; set; }
+        public virtual List<Order> Orders { get; set; }
 
     }
 
