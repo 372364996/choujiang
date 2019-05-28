@@ -21,6 +21,18 @@ namespace choujiang_api.Controllers
             var products = db.Products.Include(p => p.Business);
             return View(products.ToList());
         }
+        public ActionResult GetProductById(int id)
+        {
+            var product = db.Products.Find(id);
+            //var product = products.Select(p => new { p.Id, p.Name, BusinessName = p.Business.Name, OpenTime = p.OpenTime.ToLongTimeString() });
+            return Json(new { success = true, product.Id, product.Name, BusinessName = product.Business.Name, OpenTime=product.OpenTime.ToString("MM月dd日 HH:mm") }, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult List()
+        {
+            var products = db.Products.ToList();
+            var product = products.Select(p => new { p.Id, p.Name, BusinessName = p.Business.Name, OpenTime = p.OpenTime.ToLongTimeString() });
+            return Json(new { success = true, product }, JsonRequestBehavior.AllowGet);
+        }
 
         // GET: Products/Details/5
         public ActionResult Details(int? id)
@@ -53,7 +65,7 @@ namespace choujiang_api.Controllers
         {
             if (ModelState.IsValid)
             {
-                products.CreateTime=DateTime.Now;
+                products.CreateTime = DateTime.Now;
                 db.Products.Add(products);
                 db.SaveChanges();
                 return RedirectToAction("Index");

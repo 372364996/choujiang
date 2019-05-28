@@ -10,18 +10,18 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Products.Name)
+            产品名称
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Users.Name)
+            用户ID
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CreateTime)
+            参与时间
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.IsWin)
+            是否中奖
         </th>
-        <th></th>
+        
     </tr>
 
 @foreach (var item in Model) {
@@ -30,7 +30,7 @@
             @Html.DisplayFor(modelItem => item.Products.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Users.Name)
+            @Html.DisplayFor(modelItem => item.Users.Id)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.CreateTime)
@@ -38,11 +38,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.IsWin)
         </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
+       
     </tr>
 }
 
