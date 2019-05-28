@@ -15,8 +15,8 @@ namespace choujiang_api.Controllers
     public class WxAppController : Controller
     {
         protected static ILog logger = LogManager.GetLogger(typeof(WxAppController));
-        protected static string AppId = "wx74c6cc8e1fac314c";
-        protected static string AppSecret = "a78f78cd1a44b076efe933b16e871af3";
+        protected static string AppId = "wxe7d353d47bf5713f";
+        protected static string AppSecret = "a43128ad5b50ee90a481bf5037a96a05";
         protected static string GetSessionKeyUrl = "https://api.weixin.qq.com/sns/jscode2session?appid={0}&secret={1}&js_code={2}&grant_type=authorization_code";
         protected ChouJiangDbContext db = new ChouJiangDbContext();
         private User user = null;

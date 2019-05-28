@@ -34,15 +34,16 @@ namespace choujiang_api.Controllers
             {
                 return Json(new { success = true, errMsg = "session_key参数:null" }, JsonRequestBehavior.AllowGet);
             }
-               var user = db.Users.ToList().Find(u => u.OpenId == session.openid);
+            var user = db.Users.ToList().Find(u => u.OpenId == session.openid);
             try
             {
-            
-                if (user==null)
+
+                if (user == null)
                 {
+                    user = new User();
                     user.OpenId = session.openid;
-                    user.CreateTime=DateTime.Now;
-                    user.Account= new Account()
+                    user.CreateTime = DateTime.Now;
+                    user.Account = new Account()
                     {
                         Money = 0,
                         MoneyLocked = 0,
@@ -50,6 +51,7 @@ namespace choujiang_api.Controllers
                     db.Users.Add(user);
                     db.SaveChanges();
                 }
+                
                 //session_id = CryptoHelper.Base64Encode(WxProvider.GetUser(AppId, session.session_key, encryptedData, iv));
             }
             catch (Exception ex)
