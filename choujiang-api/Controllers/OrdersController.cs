@@ -11,7 +11,7 @@ using Components.Repositories.Ef;
 
 namespace choujiang_api.Controllers
 {
-    public class OrdersController : Controller
+    public class OrdersController : WxAppController
     {
         private ChouJiangDbContext db = new ChouJiangDbContext();
 
@@ -26,9 +26,12 @@ namespace choujiang_api.Controllers
         {
 
             var user = db.Users.SingleOrDefault(u => u.OpenId == openid);
-            var data = db.Orders.SingleOrDefault(o => o.PorductId == id && user.OpenId == openid);
+            var data = db.Orders.SingleOrDefault(o => o.PorductId == id && o.Users.OpenId == openid);
             if (data != null)
             {
+                logger.Debug("id:" + id);
+                logger.Debug("openid:" + openid);
+                logger.Debug("有订单:"+data.Products.Name);
                 return Json(new { success = false }, JsonRequestBehavior.AllowGet);
 
             }

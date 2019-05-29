@@ -7,14 +7,18 @@ using System.Web;
 using System.Web.Mvc;
 using Components.Domains;
 using Components.Helper;
+using log4net;
 using Newtonsoft.Json;
 
 namespace choujiang_api.Controllers
 {
     public class HomeController : WxAppController
     {
+        protected static ILog logger = LogManager.GetLogger(typeof(HomeController));
+
         public ActionResult Index()
         {
+            logger.Debug("进入首页");
             return View();
         }
 
