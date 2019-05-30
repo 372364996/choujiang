@@ -49,7 +49,7 @@ namespace choujiang_api.Controllers
         }
 
         public ActionResult GetOrderListByUserId(string openid) {
-            var list = db.Orders.ToList().Where(o => o.Users.OpenId == openid).Select(o=>new { o.Id,o.IsWin,o.Products.Name,OpenTime=o.Products.OpenTime.ToString("MM月dd日 HH:mm"), CreateTime = o.CreateTime.ToString("MM月dd日 HH:mm") }) ;
+            var list = db.Orders.ToList().Where(o => o.Users.OpenId == openid).Select(o=>new { o.Id,o.IsWin,o.Products.Name,OpenTime=o.Products.OpenTime.ToString("MM月dd日 HH:mm"), ProductId = o.Products.Id,CreateTime = o.CreateTime.ToString("MM月dd日 HH:mm") }) ;
             return Json(new { list },JsonRequestBehavior.AllowGet);
         }
     }

@@ -124,5 +124,9 @@ namespace choujiang_api.Controllers
             }
             base.Dispose(disposing);
         }
+        public ActionResult GetUserById(string openid) {
+            var user = db.Users.Where(u => u.OpenId == openid).SingleOrDefault(); ;
+            return Json( new { success=true,user.Id,user.Name,user.HeadImg },JsonRequestBehavior.AllowGet);
+        }
     }
 }
