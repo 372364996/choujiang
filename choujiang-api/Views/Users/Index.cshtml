@@ -1,0 +1,82 @@
+﻿@model IEnumerable<Components.Domains.User>
+
+@{
+    ViewBag.Title = "用户列表";
+}
+@section css{
+    <style>
+        td {
+            line-height: 64px !important;
+        }
+    </style>
+}
+<h2>@ViewBag.Title</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            头像
+        </th>
+        <th>
+            用户昵称
+        </th>
+        <th>
+            性别
+        </th>
+        <th>
+            籍贯
+        </th>
+        <th>
+            注册时间
+        </th>
+        <th>
+            手机号
+        </th>
+
+        <th>
+            OpenId
+        </th>
+        <th>操作</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @if (string.IsNullOrEmpty(item.HeadImg))
+                {
+                    <img src="~/Content/images/morenhead.png" />
+                }
+                else
+                {
+                    <img style="border-radius:32px" src="~/Upload/@(item.HeadImg+"/64.png")" alt="@item.Name" />
+                }
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sex)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Country)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mobile)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OpenId)
+            </td>
+            <td>
+                @Html.ActionLink("修改", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("详情", "Details", new { id = item.Id }) |
+                @Html.ActionLink("删除", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>

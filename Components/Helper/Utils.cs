@@ -660,6 +660,17 @@ namespace Components.Helper
             }
             return decode;
         }
+        /// <summary>
+        /// 字节转化成图片
+        /// </summary>
+        /// <param name="byt"></param>
+        /// <returns></returns>
+        public static Image BytToImg(byte[] byt)
+        {
+            MemoryStream ms = new MemoryStream(byt);
+            Image img = Image.FromStream(ms);
+            return img;
+        }
     }
     /// <summary>
     /// WebClient派生类，重写GetWebRequest解决TimeOut问题
