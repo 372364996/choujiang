@@ -209,7 +209,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Upload\" />
+    <Folder Include="Upload\ProductHeadImg\" />
     <Folder Include="Views\ChouJiang\" />
     <Folder Include="Views\WxApp\" />
   </ItemGroup>

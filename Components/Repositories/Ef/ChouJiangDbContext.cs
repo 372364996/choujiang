@@ -56,7 +56,8 @@ namespace Components.Repositories.Ef
             modelBuilder.Configurations.Add(new AccountCashOutLogMapping());
             modelBuilder.Configurations.Add(new OrderMapping());
             modelBuilder.Configurations.Add(new BusinessMapping());
-
+            modelBuilder.Configurations.Add(new ProductImageMapping());
+            
         }
         public class UserMapping : EntityTypeConfiguration<User>
         {
@@ -95,6 +96,19 @@ namespace Components.Repositories.Ef
                     .WillCascadeOnDelete(false);
             }
         }
+        public class ProductImageMapping : EntityTypeConfiguration<ProductImages>
+        {
+            public ProductImageMapping()
+            {
+                ToTable("ProductImages");
+
+                HasRequired(u => u.Product)
+                    .WithMany(s => s.ProductImages)
+                    .HasForeignKey(s => s.ProductId)
+                    .WillCascadeOnDelete(false);
+            }
+        }
+
         public class AccountMapping : EntityTypeConfiguration<Account>
         {
             public AccountMapping()

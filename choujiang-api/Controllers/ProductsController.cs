@@ -26,12 +26,12 @@ namespace choujiang_api.Controllers
             bool isCan = false;
             var product = db.Products.Find(id);
             var order = db.Orders.Where(o => o.PorductId == id && o.UserId == CurrentUser.Id).SingleOrDefault();
-            if (order==null)
+            if (order == null)
             {
                 isCan = true;
             }
             //var product = products.Select(p => new { p.Id, p.Name, BusinessName = p.Business.Name, OpenTime = p.OpenTime.ToLongTimeString() });
-            return Json(new { success = true,iscan=isCan, product.Id, product.Name, BusinessName = product.Business.Name, OpenTime=product.OpenTime.ToString("MM月dd日 HH:mm") }, JsonRequestBehavior.AllowGet);
+            return Json(new { success = true, iscan = isCan, product.Id, product.Name, BusinessName = product.Business.Name, OpenTime = product.OpenTime.ToString("MM月dd日 HH:mm") }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult List()
         {
@@ -67,12 +67,20 @@ namespace choujiang_api.Controllers
         // 详细信息，请参阅 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,OpenTime,BusinessId")] Products products)
+        public ActionResult Create([Bind(Include = "Id,Name,OpenTime,BusinessId")] Products products, HttpPostedFileBase productHeadImg)
         {
             if (ModelState.IsValid)
             {
                 products.CreateTime = DateTime.Now;
                 db.Products.Add(products);
+                if (productHeadImg != null)
+                {
+                    //存储封面图片
+                    string imgName = Guid.NewGuid() + ".jpg";
+                    string imgPath = System.IO.Path.Combine(Server.MapPath("~/Upload/ProductHeadImg"), imgName);
+                    productHeadImg.SaveAs(imgPath);
+                    products.ProductHeadImg = imgName;
+                }
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -102,16 +110,27 @@ namespace choujiang_api.Controllers
         // 详细信息，请参阅 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,OpenTime,BusinessId")] Products products)
+        public ActionResult Edit(FormCollection form, HttpPostedFileBase productHeadImg)
         {
-            if (ModelState.IsValid)
+            var product = db.Products.Find(Convert.ToInt32(form["Id"]));
+            product.Name = form["Name"];
+            product.OpenTime = Convert.ToDateTime(form["OpenTime"]);
+            product.BusinessId = Convert.ToInt32(form["BusinessId"]);
+
+            if (productHeadImg != null)
             {
-                db.Entry(products).State = EntityState.Modified;
+                //存储封面图片
+                string imgName = Guid.NewGuid() + ".jpg";
+                string imgPath = System.IO.Path.Combine(Server.MapPath("~/Upload/ProductHeadImg"), imgName);
+                productHeadImg.SaveAs(imgPath);
+                product.ProductHeadImg = imgName;
+                product.CreateTime = product.CreateTime;
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.BusinessId = new SelectList(db.Businesses, "Id", "Name", products.BusinessId);
-            return View(products);
+            ViewBag.BusinessId = new SelectList(db.Businesses, "Id", "Name", product.BusinessId);
+            return View(product);
         }
 
         // GET: Products/Delete/5
